@@ -6,7 +6,7 @@ const jobListings = [
       salary: "$70,000 - $90,000 / year",
       type: "Full-time",
       postedAt: "2 gün önce",
-      logo: "https://via.placeholder.com/50",
+      logo: "/angryface.svg",
     },
     {
       title: "UI/UX Designer",
@@ -33,6 +33,15 @@ const jobListings = [
       salary: "$80,000 - $100,000 / year",
       type: "Remote",
       postedAt: "5 gün önce",
+      logo: "https://via.placeholder.com/50",
+    },
+    {
+      title: "Product Manager",
+      company: "E-Commerce Inc.",
+      location: "Online",
+      salary: "$90,000 - $120,000 / year",
+      type: "Contract",
+      postedAt: "6 saat önce",
       logo: "https://via.placeholder.com/50",
     },
     {
