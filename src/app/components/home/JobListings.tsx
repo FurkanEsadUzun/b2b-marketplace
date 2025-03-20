@@ -14,7 +14,7 @@ const jobs = [
 export default function JobListings() {
   return (
     <div className="bg-white">
-      <div className="max-w-6xl mx-auto px-6 lg:px-8">
+      <div className="max-w-7xl py-8 mx-auto px-6 lg:px-8 border ">
         {/* Başlık */}
         <h2 className="text-3xl font-bold text-gray-900">Sektörünüze Göre İş İlanlarını Keşfedin</h2>
         <p className="mt-2 text-lg text-gray-600">
