@@ -2,7 +2,7 @@ import { FaFacebookF, FaTwitter, FaLinkedinIn, FaInstagram } from "react-icons/f
 
 export default function Footer() {
   return (
-    <footer className="bg-white text-black border-t ">
+    <footer className="bg-gradient-to-t from-black from-0% via-green-900 via-50% to-green-700 to-100% text-white border-t ">
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           
@@ -16,7 +16,7 @@ export default function Footer() {
               />
               <span className="ml-2 text-xl font-bold">B2B MarketPlace</span>
             </a>
-            <p className="mt-3 text-gray-700 text-sm">
+            <p className="mt-3 text-gray-400 text-sm">
               Türkiye'nin en güvenilir B2B iş platformu. Güvenli ticaret, akıllı eşleştirme ve profesyonel hizmetlerle işinizi büyütün.
             </p>
           </div>
@@ -26,22 +26,22 @@ export default function Footer() {
             <h3 className="text-lg font-semibold">Hızlı Bağlantılar</h3>
             <ul className="mt-4 space-y-2">
               <li>
-                <a href="#" className="text-gray-700 hover:text-white">
+                <a href="#" className="text-gray-400 hover:text-white">
                   Home
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-700 hover:text-white">
+                <a href="#" className="text-gray-400 hover:text-white">
                   About Us
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-700 hover:text-white">
+                <a href="#" className="text-gray-400 hover:text-white">
                   Services
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-700 hover:text-white">
+                <a href="#" className="text-gray-400 hover:text-white">
                   Contact
                 </a>
               </li>
@@ -53,22 +53,22 @@ export default function Footer() {
             <h3 className="text-lg font-semibold">Yardım ve Destek</h3>
             <ul className="mt-4 space-y-2">
               <li>
-                <a href="#" className="text-gray-700 hover:text-white">
+                <a href="#" className="text-gray-400 hover:text-white">
                   Sıkça Sorulan Sorular (FAQ)
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-700 hover:text-white">
+                <a href="#" className="text-gray-400 hover:text-white">
                   Destek Merkezi
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-700 hover:text-white">
+                <a href="#" className="text-gray-400 hover:text-white">
                   Gizlilik Politikası
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-700 hover:text-white">
+                <a href="#" className="text-gray-400 hover:text-white">
                   Kullanım Şartları
                 </a>
               </li>
@@ -78,18 +78,18 @@ export default function Footer() {
 
         {/* Sosyal Medya ve Telif Hakkı */}
         <div className="border-t border-gray-700 mt-8 pt-6 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-gray-700 text-sm">© {new Date().getFullYear()} B2B MarketPlace. Tüm hakları saklıdır.</p>
+          <p className="text-gray-400 text-sm">© {new Date().getFullYear()} B2B MarketPlace. Tüm hakları saklıdır.</p>
           <div className="flex space-x-4 mt-4 md:mt-0">
-            <a href="#" className="text-gray-700 hover:text-white">
+            <a href="#" className="text-gray-400 hover:text-white">
               <FaFacebookF className="h-5 w-5" />
             </a>
-            <a href="#" className="text-gray-700 hover:text-white">
+            <a href="#" className="text-gray-400 hover:text-white">
               <FaTwitter className="h-5 w-5" />
             </a>
-            <a href="#" className="text-gray-700 hover:text-white">
+            <a href="#" className="text-gray-400 hover:text-white">
               <FaLinkedinIn className="h-5 w-5" />
             </a>
-            <a href="#" className="text-gray-700 hover:text-white">
+            <a href="#" className="text-gray-400 hover:text-white">
               <FaInstagram className="h-5 w-5" />
             </a>
           </div>
