@@ -15,7 +15,7 @@ export default function Hero() {
       <div className="flex flex-col gap-y-24">
 
       {/* İçerik */}
-      <div className="text-white flex flex-col text-center p-4 pb-8 my-8 shadow-md backdrop-blur-2xl rounded-[20px] border-[#ffffff27] border-[1.5px] max-w-2xl ">
+      <div className="text-white flex flex-col text-center p-4 pb-8 my-8 shadow-md backdrop-blur-2xl rounded-[20px] border-[#37c41427] border-[1.5px] max-w-2xl ">
 
         <p className="mt-4 text-md opacity-75 font-semibold">
           Güvenilir tedarikçilerle buluşun, projelerinizi büyütün ve iş ortaklarınızı keşfedin.

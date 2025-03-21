@@ -116,11 +116,11 @@ export default function Navbar() {
                 className="border border-gray-300 rounded-lg px-4 py-1 text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-600"
               />
             </div>
-            <a href="#" className="text-gray-700 hover:text-green-600">
+            <a href="login" className="text-gray-700 hover:text-green-600">
               Log in
             </a>
             <a
-              href="#"
+              href="signup"
               className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition"
             >
               Sign Up

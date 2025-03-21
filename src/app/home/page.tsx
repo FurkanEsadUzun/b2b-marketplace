@@ -8,7 +8,7 @@ import BusinessSolutions from "@/app/components/home/BusinessSolutions";
 import FindPartners from "@/app/components/home/FindPartners";
 import WhyBusinesses from "@/app/components/home/WhyBusinesses";
 import FindWork from "@/app/components/home/FindWork";
- 
+
 export default function HomePage() {
     return (
       <div className="page ">
@@ -22,6 +22,7 @@ export default function HomePage() {
         <Testimonials />
         <Features />
         <FeaturedCompanies />
+
         
         
       </div>
