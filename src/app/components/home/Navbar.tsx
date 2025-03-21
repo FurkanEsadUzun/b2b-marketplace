@@ -1,10 +1,11 @@
 "use client";
 import { useState } from "react";
-import { FaChevronDown, FaChevronRight } from "react-icons/fa";
+import { FaBars, FaChevronDown, FaChevronRight, FaTimes } from "react-icons/fa";
 
 export default function Navbar() {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [subMenuOpen, setSubMenuOpen] = useState<string | null>(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const toggleDropdown = (menu: string) => {
     setOpenDropdown(openDropdown === menu ? null : menu);
@@ -108,7 +109,7 @@ export default function Navbar() {
 
             </div>
           {/* Sağ Kısım (Arama ve Butonlar) */}
-          <div className="flex items-center space-x-4">
+          <div className="sm:flex hidden items-center space-x-4">
             <div className="relative">
               <input
                 type="text"
@@ -126,8 +127,110 @@ export default function Navbar() {
               Sign Up
             </a>
           </div>
+          
+          <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden text-gray-700 text-2xl">
+            {mobileMenuOpen ? <FaTimes /> : <FaBars />}
+          </button>
         </div>
+        {/* Mobil Menü Butonu */}
+
+{/* Mobil Menü */}
+      {mobileMenuOpen && (
+        <div className="md:hidden absolute top-12 left-0 w-full bg-white shadow-md py-4 px-6">
+          {mobileMenuOpen && (
+  <div className="md:hidden absolute top-8 left-0 w-full bg-white shadow-md py-4 px-6">
+    {[
+      {
+        name: "Find Talent",
+        subMenu: [
+          { name: "Browse Jobs", link: "#" },
+          {
+            name: "Job Categories",
+            link: "#",
+            subItems: [
+              "Development & IT",
+              "Design & Creative",
+              "Sales & Marketing",
+              "Writing & Translation",
+              "Admin & Customer Support",
+              "Finance & Accounting",
+              "HR & Training",
+              "Legal",
+              "Engineering & Architecture",
+            ],
+          },
+        ],
+      },
+      {
+        name: "Find Work",
+        subMenu: [
+          { name: "Post a Job", link: "#" },
+          { name: "Hire Talent", link: "#" },
+        ],
+      },
+      { name: "Why B2B Market?", subMenu: [{ name: "Success Stories", link: "#" }, { name: "Case Studies", link: "#" }] },
+      { name: "What’s New?", subMenu: [{ name: "Latest Updates", link: "#" }, { name: "Blog", link: "#" }] },
+      { name: "Enterprise", subMenu: null },
+      { name: "Pricing", subMenu: null },
+    ].map((menu) => (
+      <div key={menu.name} className="py-2 border-b border-gray-200">
+        {/* Ana Menü Butonu */}
+        <button
+          className="w-full text-left flex justify-between items-center font-medium text-gray-700 hover:text-green-600"
+          onClick={() => toggleDropdown(menu.name)}
+        >
+          {menu.name} {menu.subMenu && <FaChevronDown />}
+        </button>
+
+        {/* Alt Menü Açılırsa */}
+        {menu.subMenu && openDropdown === menu.name && (
+          <div className="ml-4 mt-2 space-y-2">
+            {menu.subMenu.map((item, index) => (
+              <div key={index}>
+                <button
+                  className="block w-full text-left text-sm text-gray-700 hover:text-green-600 flex justify-between items-center"
+                  onClick={() => item.subItems && toggleSubMenu(item.name)}
+                >
+                  {item.name}
+                  {item.subItems && <FaChevronRight className="text-xs" />}
+                </button>
+
+                {/* Eğer alt menü (subItems) varsa */}
+                {item.subItems && subMenuOpen === item.name && (
+                  <div className="ml-6 mt-2 space-y-2">
+                    {item.subItems.map((subItem, subIndex) => (
+                      <a key={subIndex} href="#" className="block text-sm text-gray-700 hover:text-green-600">
+                        {subItem}
+                      </a>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
       </div>
+    ))}
+
+    {/* Login ve Signup Butonları */}
+    <a href="login" className="block bg-green-600 text-white text-center py-2 rounded-lg hover:bg-green-700 transition mt-4">
+      Log in
+    </a>
+    <a href="signup" className="block bg-green-600 text-white text-center py-2 rounded-lg hover:bg-green-700 transition mt-2">
+      Sign Up
+    </a>
+  </div>
+)}
+
+          <a href="login" className="block text-gray-700 py-2 hover:text-green-600 mt-4">
+            Log in
+          </a>
+          <a href="signup" className="block bg-green-600 text-white text-center py-2 rounded-lg hover:bg-green-700 transition mt-2">
+            Sign Up
+          </a>
+        </div>
+      )}     
+       </div>
     </nav>
   );
 }
