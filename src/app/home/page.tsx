@@ -1,5 +1,4 @@
 import Hero from "@/app/components/home/Hero";
-import Features from "@/app/components/home/Features";
 import FeaturedCompanies from "@/app/components/home/FeaturedCompanies";
 import JobListings from "@/app/components/home/JobListings";
 import Testimonials from "@/app/components/home/Testimonials";
@@ -8,6 +7,8 @@ import BusinessSolutions from "@/app/components/home/BusinessSolutions";
 import FindPartners from "@/app/components/home/FindPartners";
 import WhyBusinesses from "@/app/components/home/WhyBusinesses";
 import FindWork from "@/app/components/home/FindWork";
+import Deneme from "../components/home/deneme";
+import Deneme2 from "@/app/components/home/deneme2";
 
 export default function HomePage() {
     return (
@@ -16,11 +17,12 @@ export default function HomePage() {
         <Advantages />
         <JobListings />
         <BusinessSolutions />
+        <Deneme/>
+        <Deneme2/>
         <FindPartners />
         <WhyBusinesses />
         <FindWork />
         <Testimonials />
-        <Features />
         <FeaturedCompanies />
 
         

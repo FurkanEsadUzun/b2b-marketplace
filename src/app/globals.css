@@ -35,3 +35,16 @@ body {
     @apply flex flex-col gap-y-24 bg-white pt-8;
   }
 }
+
+.hover\:shadow-glow-green:hover {
+  box-shadow: 0 0 15px rgba(34, 197, 94, 0.6);
+}
+.hover\:shadow-glow-white:hover {
+  box-shadow: 0 0 15px 8px rgba(255, 255, 255, 0.8);
+}
+.focus\:shadow-glow-green:focus {
+  box-shadow: 0 0 15px rgba(34, 197, 94, 0.6);
+}
+.shadow-glow-green {
+  box-shadow: 0 0 15px rgba(34, 197, 94, 0.6);
+}

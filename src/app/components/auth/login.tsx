@@ -76,7 +76,7 @@ export default function LoginForm() {
 
           <p className="mt-4 text-sm text-center">
             Don't have an account?{" "}
-            <a href="/signup" className="text-purple-600 font-semibold">
+            <a href="/signup" className="text-green-600 font-semibold">
               Sign up
             </a>
           </p>
