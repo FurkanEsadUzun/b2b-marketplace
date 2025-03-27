@@ -5,16 +5,25 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
+
 export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Email:", email, "Password:", password);
-    // Burada giriş işlemi yapılabilir, başarılıysa yönlendirme ekleyebilirsin
-    // router.push("/dashboard");
+
+    try {
+      const data = await loginUser({ email, password });
+
+      // Giriş başarılı, token saklandı ve yönlendirildi
+      alert("Giriş başarılı! Ana sayfaya yönlendiriliyorsunuz.");
+      router.push("/"); // Başka bir sayfaya da yönlendirebilirsin
+    } catch (err: any) {
+      setError(err.message || "Giriş başarısız. Lütfen bilgilerinizi kontrol edin.");
+    }
   };
 
   return (
@@ -36,6 +45,9 @@ export default function LoginForm() {
           <p className="text-gray-500 text-sm pt-4 mb-8">
             Please enter your login details.
           </p>
+
+          {/* Hata Mesajı */}
+          {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
 
           {/* Form */}
           <form onSubmit={handleSubmit}>
@@ -90,7 +102,7 @@ export default function LoginForm() {
           className="w-1/2 relative"
         >
           <Image
-            src="/angryface.svg" // Eğer `public/` klasörüne koyduysan bu şekilde olmalı
+            src="/angryface.svg"
             alt="Login Illustration"
             width={500}
             height={500}
