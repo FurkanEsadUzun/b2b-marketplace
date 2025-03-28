@@ -5,6 +5,39 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
+async function loginUser(credentials: { email: string; password: string }) {
+  const response = await fetch("https://b2b-backend-production.up.railway.app/api/users", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(credentials),
+  });
+
+  const contentType = response.headers.get("content-type");
+
+  if (!response.ok) {
+    let errorMessage = "Giriş başarısız.";
+    try {
+      if (contentType && contentType.includes("application/json")) {
+        const errorData = await response.json();
+        errorMessage = errorData.message || errorMessage;
+      } else {
+        const errorText = await response.text();
+        console.error("Hata Yanıtı:", errorText);
+      }
+    } catch (error) {
+      console.error("JSON parse error:", error);
+    }
+    throw new Error(errorMessage);
+  }
+
+  if (!contentType || !contentType.includes("application/json")) {
+    throw new Error("Sunucudan geçersiz veri alındı.");
+  }
+
+  const data = await response.json();
+  localStorage.setItem("token", data.token); // JWT token saklama
+  return data;
+}
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
