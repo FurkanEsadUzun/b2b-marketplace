@@ -1,76 +1,51 @@
-'use client';
+// Navbar.tsx
+"use client";
 
 import { useState, useEffect, useRef } from "react";
 import { gsap } from "gsap";
-import {
-  FaBars,
-  FaChevronDown,
-  FaTimes,
-} from "react-icons/fa";
-import { button } from "framer-motion/client";
+import { FaBars, FaChevronDown, FaTimes } from "react-icons/fa";
 import Link from "next/link";
 
+interface Category {
+  _id: string;
+  name: string;
+  slug: string;
+}
+
+interface Subcategory {
+  _id: string;
+  categoryId: string;
+  name: string;
+  slug: string;
+}
+
 export default function Navbar() {
-  const [activeSubCategory, setActiveSubCategory] = useState<string | null>(null);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [subcategories, setSubcategories] = useState<Subcategory[]>([]);
+  const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [closeTimeout, setCloseTimeout] = useState<NodeJS.Timeout | null>(null);
 
-  const subCategories = [
-    "Development & IT",
-    "Design & Creative",
-    "Sales & Marketing",
-    "Writing & Translation",
-    "Admin & Customer Support",
-    "Finance & Accounting",
-    "HR & Training",
-    "Legal",
-    "Engineering & Architecture",
-  ];
-
-  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);  // Doğru tipte referans oluşturduk
+  const fetchCategories = async () => {
+    try {
+      const categoryResponse = await fetch(`https://b2b-backend-production.up.railway.app/api/categories`);
+      const subcategoryResponse = await fetch(`https://b2b-backend-production.up.railway.app/api/subcategories`);
+      if (!categoryResponse.ok || !subcategoryResponse.ok) {
+        throw new Error("Kategoriler veya alt kategoriler alınamadı");
+      }
+      const categoriesData = await categoryResponse.json();
+      const subcategoriesData = await subcategoryResponse.json();
+      setCategories(categoriesData);
+      setSubcategories(subcategoriesData);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
-    cardRefs.current.forEach((card, index) => {
-      if (card) {
-        gsap.fromTo(
-          card,
-          { opacity: 0, scale: 0.8 },
-          {
-            opacity: 1,
-            scale: 1,
-            duration: 0.6,
-            delay: index * 0.2,
-            ease: "power2.out",
-          }
-        );
-      }
-    });
+    fetchCategories();
   }, []);
-
-  const cardData = [
-    {
-      title: "İş Ara",
-      description: "Yeteneklerinize uygun işleri keşfedin.",
-      button: "İş Ara",
-      features: ["Ücretsiz kurs oluşturma"],
-      link: "/is-ara",
-    },
-    {
-      title: "Tedarikçi ol",
-      description: "Emeklerinizin karşılığı olsun.",
-      button: "Tedarikçi ol",
-      features: ["Ücretsiz kurs oluşturma"],
-      link: "/suppliers",
-    },
-    {
-      title: "İş Ortağı Ol",
-      description: "Projelere ortak olarak büyümeye katılın.",
-      button: "İş Ortağı Ol",
-      features: ["Ücretsiz kurs oluşturma"],
-      link: "/enterprise",
-    },
-  ];
 
   return (
     <nav className="bg-white shadow-md fixed w-full top-0 left-0 z-50">
@@ -84,14 +59,11 @@ export default function Navbar() {
 
             {/* Menü */}
             <div className="hidden md:flex space-x-6">
-              <Link
-                href="/createjob"
-                className="text-gray-700 hover:text-green-600 font-medium"
-              >
+              <Link href="/createjob" className="text-gray-700 hover:text-green-600 font-medium">
                 İş İlanı Ver
               </Link>
 
-              {/* İş Ara/Bul Dropdown */}
+              {/* Kategori Dropdown */}
               <div
                 onMouseEnter={() => {
                   if (closeTimeout) clearTimeout(closeTimeout);
@@ -100,7 +72,7 @@ export default function Navbar() {
                 onMouseLeave={() => {
                   const timeout = setTimeout(() => {
                     setDropdownOpen(false);
-                    setActiveSubCategory(null);
+                    setActiveCategory(null);
                   }, 300);
                   setCloseTimeout(timeout);
                 }}
@@ -112,50 +84,35 @@ export default function Navbar() {
                 {/* Dropdown Menü */}
                 {dropdownOpen && (
                   <div className="absolute left-0 top-16 w-screen bg-white border border-gray-200 shadow-xl flex px-8 py-6 z-40">
+                    {/* Sol: Kategoriler */}
                     <div className="w-1/4 pr-6 border-r border-gray-200">
-                      {subCategories.map((sub) => (
+                      {categories.map((category) => (
                         <button
-                          key={sub}
-                          onMouseEnter={() => setActiveSubCategory(sub)}
-                          className={`w-full text-left px-4 py-2 text-sm rounded-md hover:bg-gray-100 ${activeSubCategory === sub ? "bg-gray-100 font-semibold" : ""
-                            }`}
+                          key={category._id}
+                          onMouseEnter={() => setActiveCategory(category._id)}
+                          className={`w-full text-left px-4 py-2 text-sm rounded-md hover:bg-gray-100 ${
+                            activeCategory === category._id ? "bg-gray-100 font-semibold" : ""
+                          }`}
                         >
-                          {sub}
+                          {category.name}
                         </button>
                       ))}
                     </div>
 
-                    {/* Sağ: Kartlar */}
+                    {/* Sağ: Alt Kategoriler */}
                     <div className="w-3/4 pl-6">
-                      {activeSubCategory && (
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-                          {cardData.map((card, index) => (
-                            <div
-                              key={index}
-                              ref={(el) => (cardRefs.current[index] = el)}  // ref doğru şekilde atanıyor
-                              className="bg-white rounded-lg shadow-lg p-8 border border-gray-200 transition-all hover:shadow-xl cursor-pointer"
-                            >
-                              <h3 className="flex justify-center items-center text-xl font-bold text-gray-800 text-center mb-2">
-                                {card.title}
-                              </h3>
-                              <p className="flex justify-center items-center text-sm text-gray-600 text-center mb-6">
-                                {card.description}
-                              </p>
-                              <a
-                                href={card.link}
-                                className="flex justify-center items-center py-2.5 w-full rounded-full font-semibold border border-green-600 text-green-600 transition duration-300 hover:shadow-glow-green"
-                              >
-                                {card.button}
-                              </a>
-                              <ul className="mt-6 space-y-2 text-sm">
-                                {card.features.map((feature, i) => (
-                                  <li key={i} className="flex items-center gap-2">
-                                    <span className="text-green-500">✔</span> {feature}
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
-                          ))}
+                      {activeCategory && (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+                          {subcategories
+                            .filter((sub) => sub.categoryId === activeCategory)
+                            .map((sub) => (
+                              <div key={sub._id} className="p-4 border rounded-lg shadow-md hover:shadow-lg">
+                                <h4 className="text-lg font-bold">{sub.name}</h4>
+                                <Link href={`/category/${sub.categoryId}/${sub.slug}`} className="text-green-600 underline">
+                                  İncele
+                                </Link>
+                              </div>
+                            ))}
                         </div>
                       )}
                     </div>
@@ -163,51 +120,17 @@ export default function Navbar() {
                 )}
               </div>
 
-              <Link
-                href="/whyb2b"
-                className="text-gray-700 hover:text-green-600 font-medium"
-              >
+              <Link href="/whyb2b" className="text-gray-700 hover:text-green-600 font-medium">
                 Why B2B Market?
               </Link>
-              <Link
-                href="/enterprise"
-                className="text-gray-700 hover:text-green-600 font-medium"
-              >
+              <Link href="/enterprise" className="text-gray-700 hover:text-green-600 font-medium">
                 Enterprise
               </Link>
-              <a
-                href="#"
-                className="text-gray-700 hover:text-green-600 font-medium"
-              >
+              <Link href="/plus" className="text-gray-700 hover:text-green-600 font-medium">
                 B2B Plus
-              </a>
+              </Link>
             </div>
           </div>
-
-          {/* Sağ Butonlar */}
-          <div className="sm:flex hidden items-center space-x-4">
-            <input
-              type="text"
-              placeholder="Search"
-              className="border border-gray-300 rounded-lg px-4 py-1 text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-600"
-            />
-            <a href="login" className="text-gray-700 hover:text-green-600">
-              Log in
-            </a>
-            <a
-              href="signup"
-              className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition"
-            >
-              Sign Up
-            </a>
-          </div>
-
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden text-gray-700 text-2xl"
-          >
-            {mobileMenuOpen ? <FaTimes /> : <FaBars />}
-          </button>
         </div>
       </div>
     </nav>
